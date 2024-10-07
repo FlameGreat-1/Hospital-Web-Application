@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Ralpha Hospital and Maternity{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'billing_styles.css' %}">
+    <style>
+        /* Base styles */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Header styles */
+        header {
+            background-color: #003366;
+            color: white;
+            padding: 15px 30px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            background-color: #003366;
+        }
+
+        .logo-container img {
+            height: 60px;
+            margin-right: 15px;
+            mix-blend-mode: multiply;
+            filter: contrast(1) brightness(2);
+        }
+
+        .logo-container h1 {
+            color: white;
+            font-size: 1.8rem;
+            margin: 0;
+        }
+
+        .menu-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .hamburger {
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border: 2px dotted white;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .hamburger:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .hamburger div {
+            width: 20px;
+            height: 2px;
+            background-color: white;
+            margin: 2px 0;
+        }
+
+        .dropdown {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 160px;
+            left: 30px;
+            background-color: white;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .dropdown a {
+            padding: 12px 24px;
+            text-decoration: none;
+            color: #333;
+            border-bottom: 1px solid #ddd;
+            transition: background-color 0.3s ease;
+        }
+
+        .dropdown a:hover {
+            background-color: #f5f5f5;
+        }
+
+        .dropdown.show {
+            display: flex;
+        }
+
+        .menu {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+        }
+
+        .menu-top {
+            display: flex;
+            gap: 20px;
+        }
+
+        .menu a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .menu a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Footer styles */
+        footer {
+            background-color: #f8f9fa;
+            padding: 20px 0;
+            text-align: center;
+            margin-top: 20px;
+            border-top: 1px solid #e7e7e7;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .social-icons {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .social-icons a {
+            color: #333;
+            font-size: 24px;
+            margin: 0 15px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .social-icons a:hover {
+            color: #007bff;
+            transform: translateY(-3px);
+        }
+
+        .social-icons a.facebook:hover { color: #3b5998; }
+        .social-icons a.instagram:hover { color: #e4405f; }
+        .social-icons a.twitter:hover { color: #1da1f2; }
+        .social-icons a.linkedin:hover { color: #0077b5; }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .logo-container h1 {
+                font-size: 1.4rem;
+            }
+
+            .menu-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .menu {
+                margin-top: 20px;
+            }
+
+            .social-icons {
+                flex-wrap: wrap;
+            }
+            
+            .social-icons a {
+                margin: 10px;
+            }
+        }
+
+        .news-card h3 a, .news-item h2 a {
+            color: #003366;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .news-card h3 a:hover, .news-item h2 a:hover {
+            color: #0056b3;
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+    <script>
+        function toggleMenu() {
+            const dropdown = document.getElementById('dropdown-menu');
+            dropdown.classList.toggle('show');
+        }
+
+        // Close the dropdown when clicking outside
+        window.onclick = function(event) {
+            if (!event.target.matches('.hamburger') && !event.target.matches('.hamburger div')) {
+                var dropdowns = document.getElementsByClassName("dropdown");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <!-- Header -->
+    {% block header %}
+    <header>
+        <div class="logo-container">
+            <img src="{% static 'images/logo.png' %}" alt="Ralpha Hospital" class="logo">
+            <h1>Ralpha Hospital and Maternity</h1>
+        </div>
+        
+        <div class="menu-container">
+            <!-- Hamburger menu (Three lines in a dotted circle) -->
+            <div class="hamburger" onclick="toggleMenu()">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+
+            <!-- Regular menu -->
+            <nav class="menu">
+                <div class="menu-top">
+                    <a href="{% url 'home:home' %}">Home</a>
+                    <a href="{% url 'accounts:register' %}">Register</a>
+                    <a href="{% url 'accounts:login' %}">Login</a>
+                    <a href="{% url 'home:contact_us' %}">Contact Us</a>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Dropdown Menu -->
+        <nav id="dropdown-menu" class="dropdown">
+            <a href="{% url 'home:home' %}">Home</a>
+            <a href="{% url 'admin:index' %}">Admin</a>
+            <a href="{% url 'appointments:setapt' %}">Appointments</a>
+            <a href="{% url 'Billing:dashboard' %}">Billing</a>
+            <a href="{% url 'education_training:course_list' %}">Education & Training</a>
+            <a href="{% url 'home:about_us' %}">About Us</a>
+        </nav>
+    </header>
+    {% endblock %}
+
+    <!-- Content -->
+    <main>
+        {% block content %}
+        <!-- Default content will go here -->
+        {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Ralpha Hospital and Maternity. All Rights Reserved.</p>
+        <div class="social-icons">
+            <a href="https://www.facebook.com/profile.php?id=100086170286616" target="_blank" rel="noopener noreferrer" class="facebook"><i class="fab fa-facebook"></i></a>
+            <a href="https://www.instagram.com/flamegreat?igsh=YzljYTk1ODg3Zg==" target="_blank" rel="noopener noreferrer" class="instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://x.com/Flame_Great1?s=09" target="_blank" rel="noopener noreferrer" class="twitter"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.linkedin.com/in/emmanuel-ugochukwu-iziogo-a04028238?" target="_blank" rel="noopener noreferrer" class="linkedin"><i class="fab fa-linkedin"></i></a>
+        </div>
+    </footer>
+</body>
+
+</html>

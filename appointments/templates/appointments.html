@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<center>
+    <table style="text-align: center; border-collapse: collapse; width: 80%; margin-top: 20px; background-color: rgba(255, 255, 255, 0.8);">
+        {% if user.last_name == "Patient" %}
+            <thead>
+                <tr style="background-color: indigo; color: white;">
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Consulting Doctor</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ap in ap %}
+                    <tr>
+                        <td>{{ ap.date }}</td>
+                        <td>{{ ap.time }}</td>
+                        <td>{{ ap.doctor }}</td>
+                        <td>{{ ap.status }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        {% elif user.last_name == "Doctor" %}
+            <thead>
+                <tr style="background-color: indigo; color: white;">
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Patient</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ap in ap %}
+                    <tr>
+                        <td>{{ ap.date }}</td>
+                        <td>{{ ap.time }}</td>
+                        <td>{{ ap.patient }}</td>
+                        <td>{{ ap.status }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        {% endif %}
+    </table>
+</center>
+{% endblock %}

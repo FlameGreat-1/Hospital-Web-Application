@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}HR Dashboard{% endblock %}
+
+{% block content %}
+<h1>HR Dashboard</h1>
+<div class="dark">
+    <h2>Overview</h2>
+    <p>Total Departments: {{ departments.count }}</p>
+    <p>Total Staff: {{ staff_count }}</p>
+    <p>Total Expenses: ${{ total_expenses }}</p>
+    <p>Total Income: ${{ total_income }}</p>
+</div>
+
+<h2>Departments</h2>
+<ul>
+    {% for department in departments %}
+    <li>{{ department.Name }} - Staff: {{ department.Staff_strength }}</li>
+    {% endfor %}
+</ul>
+
+<h2>HR Management</h2>
+<ul>
+    <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+    <li><a href="{% url 'department_list' %}">Departments</a></li>
+    <li><a href="{% url 'staff_list' %}">Staff</a></li>
+    <li><a href="{% url 'expense_list' %}">Expenses</a></li>
+    <li><a href="{% url 'payroll_list' %}">Payroll</a></li>
+</ul>
+
+{% endblock %}

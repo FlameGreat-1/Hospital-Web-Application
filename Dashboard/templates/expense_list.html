@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Expense List{% endblock %}
+
+{% block content %}
+<h1>Expense List</h1>
+<table class="dark">
+    <tr>
+        <th>Department</th>
+        <th>Requested By</th>
+        <th>Amount</th>
+        <th>Reason</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+    {% for expense in expenses %}
+    <tr>
+        <td>{{ expense.Department.Name }}</td>
+        <td>{{ expense.Request_by }}</td>
+        <td>${{ expense.Amount }}</td>
+        <td>{{ expense.Reason }}</td>
+        <td>{% if expense.Approved %}Approved{% else %}Pending{% endif %}</td>
+        <td>
+            {% if not expense.Approved %}
+            <form method="post" action="{% url 'Dashboard:approve_expense' expense.id %}">
+                {% csrf_token %}
+                <button type="submit" class="button">Approve</button>
+            </form>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

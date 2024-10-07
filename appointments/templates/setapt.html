@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    :root {
+        --primary-color: #3498db;
+        --secondary-color: #2c3e50;
+        --background-color: #ecf0f1;
+        --text-color: #34495e;
+        --input-border: #bdc3c7;
+        --input-focus: #3498db;
+        --button-color: #2980b9;
+        --button-hover: #3498db;
+    }
+
+    body {
+        background-color: var(--background-color);
+        color: var(--text-color);
+        font-family: Arial, sans-serif;
+    }
+
+    .appointment-form {
+        background-color: #ffffff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        width: 60%;
+        max-width: 600px;
+        margin: 40px auto;
+    }
+
+    h1 {
+        color: var(--secondary-color);
+        margin-bottom: 30px;
+    }
+
+    table {
+        width: 100%;
+    }
+
+    th {
+        text-align: left;
+        padding: 10px 0;
+        color: var(--secondary-color);
+    }
+
+    select, input[type="submit"] {
+        width: 100%;
+        padding: 10px;
+        margin: 5px 0;
+        border-radius: 4px;
+        border: 1px solid var(--input-border);
+        font-size: 16px;
+    }
+
+    select:focus {
+        outline: none;
+        border-color: var(--input-focus);
+    }
+
+    input[type="submit"] {
+        background-color: var(--button-color);
+        color: white;
+        border: none;
+        padding: 15px;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    input[type="submit"]:hover {
+        background-color: var(--button-hover);
+    }
+</style>
+
+<div class="appointment-form">
+    <form method="POST">
+        {% csrf_token %}
+        <h1>Set Appointment</h1>
+        
+        <table>
+            <tr>
+                <th>Patient:</th>
+                <td>
+                    <select name="pat">
+                        {% for p in p %}
+                        <option value="{{ p.user.first_name }}">{{ p.user.first_name }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>Doctor:</th>
+                <td>
+                    <select name="doc">
+                        {% for d in d %}
+                        <option value="{{ d.user.first_name }}">{{ d.user.first_name }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>Status:</th>
+                <td>
+                    <select name='status'>
+                        <option value="Pending">Pending</option>
+                        <option value="Completed">Completed</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>Time:</th>
+                <td>
+                    <select name="hours" style="width: 32%;">
+                        {% for h in h %}
+                        <option value="{{ h }}">{{ h }}</option>
+                        {% endfor %}
+                    </select>
+                    <select name="min" style="width: 32%;">
+                        {% for m in m %}
+                        <option value="{{ m }}">{{ m }}</option>
+                        {% endfor %}
+                    </select>
+                    <select name='am' style="width: 32%;">
+                        <option value="am">AM</option>
+                        <option value="pm">PM</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>Date:</th>
+                <td>
+                    <select name='d' style="width: 32%;">
+                        {% for da in da %}
+                        <option value="{{ da }}">{{ da }}</option>
+                        {% endfor %}
+                    </select>
+                    <select name="m" style="width: 32%;">
+                        <option value="January">January</option>
+                        <option value="February">February</option>
+                        <option value="March">March</option>
+                        <option value="April">April</option>
+                        <option value="May">May</option>
+                        <option value="June">June</option>
+                        <option value="July">July</option>
+                        <option value="August">August</option>
+                        <option value="September">September</option>
+                        <option value="October">October</option>
+                        <option value="November">November</option>
+                        <option value="December">December</option>
+                    </select>
+                    <select name='y' style="width: 32%;">
+                        {% for y in y %}
+                        <option value="{{ y }}">{{ y }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+        </table>
+        
+        <input type="submit" value="Set Appointment">
+    </form>
+</div>
+{% endblock %}

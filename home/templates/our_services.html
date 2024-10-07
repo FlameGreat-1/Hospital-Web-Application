@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="services-container" style="text-align: center; padding: 40px;">
+        <h1>{{ title }}</h1>
+        <div class="services-list" style="display: flex; flex-wrap: wrap; justify-content: space-around;">
+            {% for service in services %}
+                <div class="service-card" style="width: 30%; background-color: #f4f4f4; padding: 20px; margin: 20px; border-radius: 10px;">
+                    <img src="{{ service.image }}" alt="{{ service.title }}" style="width: 100%; border-radius: 10px;">
+                    <h2>{{ service.title }}</h2>
+                    <p>{{ service.description }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

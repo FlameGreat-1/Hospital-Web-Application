@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<center>
+<div class="profile">
+    <div style="font-size: 20px;font-family: arial;font-style: initial;background-color: indigo;color: white;padding: 5px;">{{ pro.user.first_name}}</div>
+<form method="POST" enctype="multipart/form-data" action='{% url "accounts:update_profile" %}'>
+{% csrf_token %}
+<table>    
+<tr><th>Email:</th><th><input type="text" value='{{ pro.user.email }}' disabled></th></tr>
+
+<tr><th>Phone:</th><th><input type="text" value='{{ pro.phone }}' name='phone'></th></tr>
+<tr><th>Gender:</th><th><select name="gender">
+    <option value="Male" {% if pro.gender == "Male" %}selected{% endif %}>Male</option>
+    <option value="Female" {% if pro.gender == "Female" %}selected{% endif %}>Female</option>
+    <option value="Other" {% if pro.gender == "Other" %}selected{% endif %}>Other</option>
+</select></th></tr>
+<tr><th>Age:</th><th><input type="text" value='{{ pro.age }}' name='age'></th></tr>
+
+{% if pro.user.last_name == "Patient" %}
+<tr><th>Address:</th><th><input type="text" value='{{ pro.address }}' name='address'></th></tr>
+<tr><th>Blood Group:</th><th><select name="bloodgroup">
+    <option value="A+" {% if pro.bloodgroup == "A+" %}selected{% endif %}>A+</option>
+    <option value="A-" {% if pro.bloodgroup == "A-" %}selected{% endif %}>A-</option>
+    <option value="B+" {% if pro.bloodgroup == "B+" %}selected{% endif %}>B+</option>
+    <option value="B-" {% if pro.bloodgroup == "B-" %}selected{% endif %}>B-</option>
+    <option value="O+" {% if pro.bloodgroup == "O+" %}selected{% endif %}>O+</option>
+    <option value="O-" {% if pro.bloodgroup == "O-" %}selected{% endif %}>O-</option>
+    <option value="AB+" {% if pro.bloodgroup == "AB+" %}selected{% endif %}>AB+</option>
+    <option value="AB-" {% if pro.bloodgroup == "AB-" %}selected{% endif %}>AB-</option>
+</select></th></tr>
+<tr><th>Case Paper:</th><th><input type="text" value='{{ pro.casepaper }}' name='casepaper'></th></tr>
+{% endif %}
+
+{% if pro.user.last_name == "Doctor" or pro.user.last_name == "Nurse" or pro.user.last_name == "Technician" %}
+<tr><th>Department:</th><th><input type="text" value='{{ pro.Department }}' name='dept'></th></tr>
+<tr><th>Attendance:</th><th><input type="text" value='{{ pro.attendance }}' name='attn'></th></tr>
+<tr><th>Salary:</th><th><input type="text" value='{{ pro.salary }}' name='salary'></th></tr>
+<tr><th>Status:</th><th><input type="text" value='{{ pro.status }}' name='status'></th></tr>
+{% endif %}
+
+<tr><th>Profile Picture:</th><th><input type="file" name="image"></th></tr>
+</table>
+
+<input type="submit" style="width:300px;margin:10px;font-size:18px;padding:10px;background-color: green;color: white;border: none;border-radius: 25px;font-weight: bold;" value="Update Profile">
+</form>
+</div>
+</center>
+{% endblock %}

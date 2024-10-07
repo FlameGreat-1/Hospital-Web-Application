@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Staff List{% endblock %}
+
+{% block content %}
+<h1>Staff List</h1>
+<table class="dark">
+    <tr>
+        <th>Name</th>
+        <th>Position</th>
+        <th>Department</th>
+        <th>Salary</th>
+        <th>On Probation</th>
+    </tr>
+    {% for member in staff %}
+    <tr>
+        <td>{{ member.First_name }} {{ member.Last_name }}</td>
+        <td>{{ member.Position }}</td>
+        <td>{{ member.Department.Name }}</td>
+        <td>${{ member.Salary }}</td>
+        <td>{% if member.On_probation %}Yes{% else %}No{% endif %}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Upcoming Workshops</h1>
+<div class="workshop-list">
+    {% for workshop in page_obj %}
+        <div class="workshop-item">
+            <h2><a href="{% url 'education_training:workshop_detail' workshop.id %}">{{ workshop.title }}</a></h2>
+            <p>{{ workshop.description|truncatewords:30 }}</p>
+            <p>Date: {{ workshop.date }}</p>
+            <p>Duration: {{ workshop.duration }} hours</p>
+            <p>Location: {{ workshop.location }}</p>
+        </div>
+    {% empty %}
+        <p>No workshops available at the moment.</p>
+    {% endfor %}
+</div>
+
+{% include 'pagination.html' with page=page_obj %}
+{% endblock %}

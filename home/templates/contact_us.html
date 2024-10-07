@@ -1,0 +1,118 @@
+{% extends 'base.html' %}  <!-- Use your main site's base template -->
+{% load widget_tweaks %}
+
+{% block extra_css %}
+<style>
+    .contact-container {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 20px;
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+    .contact-header {
+        text-align: center;
+        color: #333;
+        margin-bottom: 30px;
+    }
+    .contact-form {
+        background-color: #ffffff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    }
+    .contact-info {
+        background-color: #e9ecef;
+        padding: 30px;
+        border-radius: 8px;
+        margin-top: 20px;
+    }
+    .form-group {
+        margin-bottom: 20px;
+    }
+    .form-control {
+        border-radius: 4px;
+        border: 1px solid #ced4da;
+    }
+    .btn-submit {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+    }
+    .btn-submit:hover {
+        background-color: #0056b3;
+    }
+    .contact-info h2 {
+        color: #007bff;
+        margin-bottom: 20px;
+    }
+    .contact-info p {
+        margin-bottom: 10px;
+    }
+    .alert {
+        padding: 15px;
+        margin-bottom: 20px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+    }
+    .alert-success {
+        color: #155724;
+        background-color: #d4edda;
+        border-color: #c3e6cb;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="contact-container">
+    <h1 class="contact-header">Contact Us</h1>
+    
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    
+    <div class="contact-form">
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="{{ form.name.id_for_label }}">Name:</label>
+                {{ form.name|add_class:"form-control" }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.email.id_for_label }}">Email:</label>
+                {{ form.email|add_class:"form-control" }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.subject.id_for_label }}">Subject:</label>
+                {{ form.subject|add_class:"form-control" }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.message.id_for_label }}">Message:</label>
+                {{ form.message|add_class:"form-control" }}
+            </div>
+            <button type="submit" class="btn-submit">Send Message</button>
+        </form>
+    </div>
+    
+    <div class="contact-info">
+        <h2>Contact Information</h2>
+        <p><strong>Ralpha Hospital and Maternity</strong></p>
+        <p>123 Hospital Street</p>
+        <p>Abakaliki, Ebonyi State</p>
+        <p><strong>Office Hours:</strong> Mon – Fri: 9:00 AM – 5:00 PM EST</p>
+        <p><strong>Fax:</strong> 123.456.7890</p>
+        <p><strong>Telephone:</strong> 08136872013</p>
+        <p><em>Please allow 24-48 business hours for a response.</em></p>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Departments{% endblock %}
+
+{% block content %}
+<h1>Departments</h1>
+<table class="dark">
+    <tr>
+        <th>Name</th>
+        <th>Staff Strength</th>
+        <th>Head of Department</th>
+        <th>Income Generated</th>
+        <th>Expenses</th>
+    </tr>
+    {% for department in departments %}
+    <tr>
+        <td>{{ department.Name }}</td>
+        <td>{{ department.Staff_strength }}</td>
+        <td>{{ department.Head_of_department }}</td>
+        <td>${{ department.Income_generated }}</td>
+        <td>${{ department.Expenses }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

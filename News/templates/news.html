@@ -1,0 +1,66 @@
+<!-- newsletter/templates/newsletter/news.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital News</title>
+    <link rel="stylesheet" href="{% static 'news.css' %}">
+</head>
+<body>
+
+    <div class="news-section">
+        <h1>Recent News From The Hospital</h1>
+        <div class="news-cards">
+
+            <!-- Loop through all news items -->
+            {% for news in news_items %}
+            <div class="news-card">
+                <!-- News Title -->
+                <h3>{{ news.title }}</h3>
+
+                <!-- Optional Image -->
+                {% if news.image %}
+                <img src="{{ news.image.url }}" alt="{{ news.title }} Image">
+                {% endif %}
+
+                <!-- News Content -->
+                <p>{{ news.content }}</p>
+
+                <!-- Optional Video -->
+                {% if news.video %}
+                <video width="320" height="240" controls>
+                    <source src="{{ news.video.url }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                {% endif %}
+
+                <!-- Publication Date -->
+                <p><small>Published on: {{ news.publication_date }}</small></p>
+            </div>
+            {% endfor %}
+
+        </div>
+        <div class="news-section">
+            <h1>Hospital News</h1>
+            <div class="news-list">
+                {% for news in news_items %}
+                <div class="news-item">
+                    <h2><a href="{% url 'news_detail' news.id %}">{{ news.title }}</a></h2>
+                    {% if news.image %}
+                    <img src="{{ news.image.url }}" alt="{{ news.title }}">
+                    {% endif %}
+                    <p>{{ news.content|truncatewords:50 }}</p>
+                    <p class="news-date">Published on: {{ news.publication_date }}</p>
+                </div>
+                {% empty %}
+                <p>No news available at the moment.</p>
+                {% endfor %}
+            </div>
+        </div>
+        
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    :root {
+        --primary-color: #3498db;
+        --secondary-color: #2c3e50;
+        --accent-color: #e74c3c;
+        --background-color: #ecf0f1;
+        --text-color: #34495e;
+        --light-text: #ffffff;
+    }
+
+    body {
+        background-color: var(--background-color);
+        color: var(--text-color);
+        font-family: Arial, sans-serif;
+    }
+
+    .dashboard-stats {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    .stat-box {
+        width: 30%;
+        text-align: center;
+        background-color: var(--primary-color);
+        padding: 20px;
+        border-radius: 8px;
+        color: var(--light-text);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .stat-box h2 {
+        margin-bottom: 10px;
+        font-size: 1.2em;
+    }
+
+    .stat-box h1 {
+        font-size: 2em;
+        margin: 0;
+    }
+
+    .create-doctor-btn {
+        width: 100%;
+        padding: 15px;
+        background-color: var(--secondary-color);
+        color: var(--light-text);
+        border: none;
+        border-radius: 5px;
+        font-size: 1em;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .create-doctor-btn:hover {
+        background-color: #34495e;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: var(--secondary-color);
+        color: var(--light-text);
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .delete-btn, .update-btn {
+        padding: 8px 12px;
+        color: var(--light-text);
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .delete-btn {
+        background-color: var(--accent-color);
+    }
+
+    .delete-btn:hover {
+        background-color: #c0392b;
+    }
+
+    .update-btn {
+        background-color: var(--primary-color);
+    }
+
+    .update-btn:hover {
+        background-color: #2980b9;
+    }
+</style>
+
+<div class="dashboard-stats">
+    <div class="stat-box">
+        <h2>Total Doctors</h2>
+        <h1>{{tot}}</h1>
+    </div>
+    <div class="stat-box">
+        <h2>Total Patients</h2>
+        <h1>{{k}}</h1>
+    </div>
+    <div class="stat-box">
+        <h2>On-Duty Doctors</h2>
+        <h1>{{ad}}</h1>
+    </div>
+</div>
+
+<div class='pat'>
+    <a href="{% url 'crtdoc' %}"><button class="create-doctor-btn">Create Doctor</button></a>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Gender</th>
+            <th>Age</th>
+            <th>Status</th>
+            <th>Department</th>
+            <th>Attendance</th>
+            <th>Salary</th>
+            <th>Remove</th>
+            <th>Update</th>
+        </tr>
+        {% for p in p %}
+            <tr>
+                <td>{{p.user.first_name}}</td>
+                <td>{{p.phone}}</td>
+                <td>{{p.user.email}}</td>
+                <td>{{p.gender}}</td>
+                <td>{{p.age}}</td>
+                <td>{{p.status}}</td>
+                <td>{{p.Department}}</td>
+                <td>{{p.attendance}}</td>
+                <td>{{p.salary}}</td>
+                <form method="POST" action="{% url 'deletedoc' %}">
+                    {%csrf_token%}
+                    <input type='hidden' value="{{ p.did }}" name='pid'>
+                <td><button type='submit' class="delete-btn">Delete</button></td>
+                </form>
+                <form method="POST" action="{% url 'updatedoc' %}">
+                    {%csrf_token%}
+                    <input type='hidden' value="{{ p.did }}" name='pid'>
+                <td><button type='submit' class="update-btn">Update</button></td>
+                </form>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

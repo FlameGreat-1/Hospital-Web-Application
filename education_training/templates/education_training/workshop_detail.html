@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ workshop.title }}</h1>
+<p>{{ workshop.description }}</p>
+<p>Date: {{ workshop.date }}</p>
+<p>Duration: {{ workshop.duration }} hours</p>
+<p>Location: {{ workshop.location }}</p>
+<p>Capacity: {{ workshop.capacity }}</p>
+
+{% if user.is_authenticated %}
+    {% if is_registered %}
+        <p>You are registered for this workshop.</p>
+    {% else %}
+        <form action="{% url 'education_training:register_workshop' workshop.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Register</button>
+        </form>
+    {% endif %}
+{% else %}
+    <p>Please <a href="{% url 'accounts:login' %}">log in</a> to register for this workshop.</p>
+{% endif %}
+{% endblock %}

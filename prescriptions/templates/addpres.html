@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<center>
+    <form method="POST" style="background-color: #f8f8f8; padding: 20px; border-radius: 8px; border: 2px solid #ccc; width: 50%; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+        {% csrf_token %}
+        <h1 style="color: #333; font-family: Arial;">Add Prescription</h1>
+        
+        <table style="width: 100%; margin-bottom: 20px;">
+            <tr>
+                <th style="text-align: left; padding-right: 10px;">Patient:</th>
+                <td>
+                    <select name="pat" style="padding: 5px; border-radius: 4px; border: 2px solid #ccc; width: 100%; max-width: 300px;">
+                        {% for p in p %}
+                        <option value="{{ p }}">{{ p }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+        
+                
+            </tr>
+            <tr>
+                <th style="text-align: left; padding-right: 10px;">Prescription:</th>
+                <td>
+                    <input type="text" name="pres" style="padding: 5px; border-radius: 4px; border: 2px solid #ccc; width: 100%; max-width: 300px;">
+                </td>
+            </tr>
+            <tr>
+                <th style="text-align: left; padding-right: 10px;">Disease:</th>
+                <td>
+                    <input type="text" name="dis" style="padding: 5px; border-radius: 4px; border: 2px solid #ccc; width: 100%; max-width: 300px;">
+                </td>
+            </tr>
+        </table>
+        
+        <input type="submit" value="Add Prescription" style="width: 100%; padding: 15px; font-size: 18px; background-color: green; color: white; border: none; border-radius: 25px; font-weight: bold;">
+    </form>
+</center>
+{% endblock %}

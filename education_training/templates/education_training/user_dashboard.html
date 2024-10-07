@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Your Education Dashboard</h1>
+
+<h2>Enrolled Courses</h2>
+<ul>
+    {% for enrollment in enrollments %}
+    <li>
+        {{ enrollment.course.title }} ({{ enrollment.course.start_date }} - {{ enrollment.course.end_date }})
+        <a href="{% url 'education_training:course_detail' enrollment.course.id %}">View Details</a>
+        <a href="{% url 'education_training:generate_certificate' enrollment.course.id %}">Generate Certificate</a>
+    </li>
+    {% empty %}
+    <li>You are not enrolled in any courses.</li>
+    {% endfor %}
+</ul>
+
+<h2>Registered Workshops</h2>
+<ul>
+    {% for registration in workshops %}
+    <li>
+        {{ registration.workshop.title }} ({{ registration.workshop.date }})
+        <a href="{% url 'education_training:workshop_detail' registration.workshop.id %}">View Details</a>
+    </li>
+    {% empty %}
+    <li>You are not registered for any workshops.</li>
+    {% endfor %}
+</ul>
+
+<h2>Your Certificates</h2>
+<ul>
+    {% for certificate in certificates %}
+    <li>
+        {{ certificate.course.title }} - Issued on {{ certificate.issue_date }}
+        <a href="{{ certificate.certificate_file.url }}" target="_blank">View Certificate</a>
+    </li>
+    {% empty %}
+    <li>You have not earned any certificates yet.</li>
+    {% endfor %}
+</ul>
+
+<p>
+    <a href="{% url 'education_training:calendar_feed' %}">Subscribe to Calendar Feed</a>
+</p>
+{% endblock %}

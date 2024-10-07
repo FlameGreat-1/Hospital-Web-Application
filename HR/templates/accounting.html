@@ -1,0 +1,221 @@
+{% extends 'admin/base_site.html' %}
+{% load static %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'admin/css/changelists.css' %}">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --background-color: #ecf0f1;
+            --text-color: #34495e;
+            --light-text: #ffffff;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            font-family: Arial, sans-serif;
+        }
+
+        #content-main {
+            padding: 20px;
+        }
+
+        .invoice-form {
+            width: 45%;
+            padding: 20px;
+            text-align: center;
+            background-color: var(--primary-color);
+            border-radius: 8px;
+            color: var(--light-text);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .invoice-form h1 {
+            margin-bottom: 20px;
+        }
+
+        .invoice-form table {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .invoice-form th {
+            text-align: left;
+            padding: 10px 0;
+        }
+
+        .invoice-form input[type="number"],
+        .invoice-form select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #bdc3c7;
+            border-radius: 4px;
+        }
+
+        .invoice-form input[type="submit"] {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            background-color: var(--secondary-color);
+            color: var(--light-text);
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .invoice-form input[type="submit"]:hover {
+            background-color: #34495e;
+        }
+
+        .section-header {
+            background-color: var(--secondary-color);
+            color: var(--light-text);
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: var(--secondary-color);
+            color: var(--light-text);
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .action-btn {
+            padding: 8px 12px;
+            color: var(--light-text);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .reminder-btn {
+            background-color: var(--primary-color);
+        }
+
+        .reminder-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .show-invoice-btn {
+            background-color: var(--accent-color);
+        }
+
+        .show-invoice-btn:hover {
+            background-color: #c0392b;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+    <div style="display: flex; justify-content: space-around; margin: 20px;">
+        <div class="invoice-form">
+            <h1>Create Invoice</h1>
+            <form method="POST" action='{% url "accounting" %}'>
+                {% csrf_token %}
+                <table>
+                    <tr>
+                        <th>Patient:</th>
+                        <td>
+                            <select name="pat">
+                                {% for p in p %}
+                                <option value="{{p}}">{{p}}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Paid:</th>
+                        <td><input type="number" name='paid'></td>
+                    </tr>
+                    <tr>
+                        <th>Outstanding:</th>
+                        <td><input type="number" name='out'></td>
+                    </tr>
+                </table>
+                <input type="submit" value="CREATE INVOICE">
+            </form>
+        </div>
+    </div>
+
+    <div class='appt'>
+        <h2 class="section-header">Individual Outstandings</h2>
+        <table>
+            <tr>
+                <th>Patient Name</th>
+                <th>Outstanding</th>
+                <th>Paid</th>
+                <th>Action</th>
+            </tr>
+            {% for payt in payt %}
+            <tr>
+                <td>{{payt.patient}}</td>
+                <td>{{payt.outstanding}}</td>
+                <td>{{payt.paid}}</td>
+                <td>
+                    <form method="POST" action="{% url 'send' %}">
+                        {% csrf_token %}
+                        <input type='hidden' value="{{ payt.pmid }}" name='pid'>
+                        <button type='submit' class="action-btn reminder-btn">Send Reminder</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class='pat'>
+        <h2 class="section-header">Consultation's Outstandings</h2>
+        <table>
+            <tr>
+                <th>Date</th>
+                <th>Patient Name</th>
+                <th>Paid</th>
+                <th>Outstanding</th>
+                <th>Total</th>
+                <th>Action</th>
+            </tr>
+            {% for payt in payt %}
+            <tr>
+                <td>{{payt.date|date:"F d Y"}}</td>
+                <td>{{payt.patient}}</td>
+                <td>{{payt.paid}}</td>
+                <td>{{payt.outstanding}}</td>
+                <td>{{payt.total}}</td>
+                <td>
+                    <form method="POST" action="{% url 'show' %}">
+                        {% csrf_token %}
+                        <input type='hidden' value="{{ payt.pmid }}" name='pid'>
+                        <button type='submit' class="action-btn show-invoice-btn">Show Invoice</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}

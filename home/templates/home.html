@@ -1,0 +1,498 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Ralpha Hospital and Maternity - Home{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Main Banner */
+    .main-banner {
+        position: relative;
+        text-align: center;
+        color: white;
+        height: 80vh;
+        overflow: hidden;
+    }
+
+    .main-banner img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .main-banner h1 {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 3rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    }
+
+    /* Description Section */
+    .description {
+        text-align: center;
+        margin: 40px auto;
+        padding: 0 10%;
+        font-size: 1.2rem;
+        color: #333;
+    }
+
+    /* Cards Section */
+    .cards {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        padding: 20px;
+    }
+
+    .card {
+        background-color: #f4f4f4;
+        border-radius: 10px;
+        width: 22%;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        padding: 15px;
+        transition: transform 0.3s ease;
+        margin-bottom: 20px;
+    }
+
+    .card img {
+        width: 100%;
+        border-radius: 10px;
+    }
+
+    .card h3 {
+        margin: 15px 0;
+        font-size: 1.5rem;
+    }
+
+    .card p {
+        font-size: 1rem;
+        color: #666;
+    }
+
+    .card a {
+        color: #003366;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .card:hover {
+        transform: translateY(-10px);
+    }
+
+    /* Find a Doctor Section */
+    .find-doctor {
+        background-color: #4A1942;
+        color: white;
+        text-align: center;
+        padding: 30px;
+    }
+
+    .find-doctor h2 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+    }
+
+    .find-doctor p {
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+    }
+
+    .find-doctor button {
+        background-color: #6F2C6F;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .find-doctor button:hover {
+        background-color: #9c3b9c;
+    }
+
+    /* Education and Training Section */
+    .education-training {
+        background-color: #f8f9fa;
+        padding: 60px 20px;
+        text-align: center;
+    }
+
+    .education-training h2 {
+        font-size: 2.5rem;
+        color: #003366;
+        margin-bottom: 20px;
+    }
+
+    .education-training p {
+        font-size: 1.2rem;
+        color: #333;
+        max-width: 800px;
+        margin: 0 auto 40px;
+    }
+
+    .education-features {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .feature {
+        width: 30%;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .feature h3 {
+        color: #003366;
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+    }
+
+    .feature ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .feature li {
+        margin-bottom: 20px;
+        font-size: 1rem;
+        color: #555;
+    }
+
+    .feature a {
+        color: #0056b3;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .feature a:hover {
+        text-decoration: underline;
+    }
+
+    .btn-register, .btn-enroll {
+        display: inline-block;
+        padding: 8px 16px;
+        background-color: #003366;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 0.9rem;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-register:hover, .btn-enroll:hover {
+        background-color: #004c99;
+        text-decoration: none;
+    }
+
+    /* Updated News Section Styles */
+    .news-section {
+        padding: 60px 20px;
+        background-color: #f8f9fa;
+    }
+
+    .news-section h2 {
+        text-align: center;
+        margin-bottom: 40px;
+        font-size: 2.5rem;
+        color: #003366;
+    }
+
+    .news-cards {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .news-card {
+        width: calc(33.333% - 20px);
+        margin-bottom: 40px;
+        background-color: white;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        border-radius: 8px;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .news-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    }
+
+    .news-card-image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .news-card-content {
+        padding: 20px;
+    }
+
+    .news-card h3 {
+        margin-top: 0;
+        margin-bottom: 10px;
+        font-size: 1.4rem;
+        color: #003366;
+    }
+
+    .news-card p {
+        font-size: 1rem;
+        color: #555;
+        margin-bottom: 15px;
+    }
+
+    .news-card-date {
+        font-size: 0.9rem;
+        color: #888;
+    }
+
+    .view-all-news {
+        display: block;
+        width: 200px;
+        margin: 20px auto 0;
+        padding: 12px 20px;
+        background-color: #003366;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        font-weight: bold;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    .view-all-news:hover {
+        background-color: #004c99;
+    }
+
+    /* Responsive Design */
+    @media only screen and (max-width: 1024px) {
+        .card, .news-card, .feature {
+            width: calc(50% - 20px);
+        }
+    }
+
+    @media only screen and (max-width: 768px) {
+        .card, .news-card, .feature {
+            width: 90%;
+        }
+
+        .main-banner h1 {
+            font-size: 1.8rem;
+        }
+
+        .description {
+            padding: 0 5%;
+        }
+
+        .news-section h2, .education-training h2 {
+            font-size: 2rem;
+        }
+    }
+
+    @media only screen and (max-width: 480px) {
+        .main-banner h1 {
+            font-size: 1.5rem;
+        }
+
+        .description {
+            padding: 0 3%;
+        }
+
+        .find-doctor h2 {
+            font-size: 1.5rem;
+        }
+
+        .find-doctor button {
+            width: 80%;
+        }
+
+        .news-section h2, .education-training h2 {
+            font-size: 1.8rem;
+        }
+
+        .news-card-image {
+            height: 150px;
+        }
+    }
+
+    /* Contact Us Section Styles */
+    .contact-us-section {
+        background-color: #f8f9fa;
+        padding: 60px 0;
+        text-align: center;
+        margin-top: 40px;
+    }
+
+    .contact-us-section h2 {
+        color: #003366;
+        margin-bottom: 20px;
+    }
+
+    .contact-us-section p {
+        color: #555;
+        margin-bottom: 30px;
+    }
+
+    .contact-us-section .btn-primary {
+        background-color: #003366;
+        border: none;
+        padding: 10px 30px;
+        font-size: 18px;
+        transition: background-color 0.3s ease;
+    }
+
+    .contact-us-section .btn-primary:hover {
+        background-color: #004c99;
+    }
+
+</style>
+{% endblock %}
+
+{% block content %}
+    <!-- Main Banner -->
+    <div class="main-banner">
+        <img src="{% static 'images/logo.png.webp' %}"  alt="Hospital Building">
+        <!-- Main Title -->
+        <h1>World-Class Care, Close to Home</h1>
+    </div>
+
+    <!-- Description Section -->
+    <div class="description">
+        <p>
+            For more than 10 years, Ralpha Hospital and Maternity has been a leader in the diagnosis and treatment of disease.
+            Above all, we aim to provide the highest-quality health care and service to all our patients.
+        </p>
+        <p>
+            As the hospital affiliated with three branches,
+            we are located in the heart of Eastern Nigeria, Abakaliki. The hospital includes the Tom and Chi Hospital and
+            the Ralpha medical school.
+        </p>
+    </div>
+
+    <!-- Cards Section -->
+    <div class="cards">
+        <div class="card">
+            <img src="{% static 'images/services.png' %}" alt="Our Services">
+            <h3>Our Services</h3>
+            <p>Learn about our medical services provided by our team of experts.</p>
+            <a href="{% url 'home:our_services' %}">Learn More &rarr;</a>
+        </div>
+
+        <div class="card">
+            <img src="{% static 'images/appointment.png' %}" alt="Appointments">
+            <h3>Appointments</h3>
+            <p>Learn how we strive to keep you comfortable during your stay with us.</p>
+            <a href="{% url 'appointments:setapt' %}">Learn More &rarr;</a>
+        </div>
+
+        <div class="card">
+            <img src="{% static 'images/Locations.jpg' %}" alt="Location">
+            <h3>Location</h3>
+            <p>Get directions to our hospital and information about parking.</p>
+            <a href="{% url 'home:location' %}">Learn More &rarr;</a>
+        </div>
+    </div>
+
+    <!-- Find a Doctor Section -->
+    <div class="find-doctor">
+        <h2>Find a Doctor</h2>
+        <p>Search for a Ralpha Hospital expert by last name, specialty or location.</p>
+        <button onclick="window.location.href='{% url 'home:find_doctor' %}'">Find a Doctor</button>
+    </div>
+
+    <!-- Education and Training Section -->
+    <section class="education-training">
+        <h2>Education and Training at Ralpha Hospital</h2>
+        <p>Empowering healthcare professionals through continuous learning and skill development.</p>
+        
+        <div class="education-features">
+            <div class="feature">
+                <h3>Upcoming Workshops</h3>
+                <ul>
+                    {% for workshop in upcoming_workshops %}
+                        <li>
+                            <strong>{{ workshop.title }}</strong><br>
+                            Date: {{ workshop.date|date:"F d, Y" }}<br>
+                            <a href="{% url 'education_training:workshop_detail' workshop.id %}" class="btn-register">Register Now</a>
+                        </li>
+                    {% empty %}
+                        <li>No upcoming workshops at the moment.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            
+            <div class="feature">
+                <h3>Latest Courses</h3>
+                <ul>
+                    {% for course in latest_courses %}
+                        <li>
+                            <strong>{{ course.title }}</strong><br>
+                            Starts: {{ course.start_date|date:"F d, Y" }}<br>
+                            <a href="{% url 'education_training:course_detail' course.id %}" class="btn-enroll">Enroll Now</a>
+                        </li>
+                    {% empty %}
+                        <li>No courses available at the moment.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            
+            <div class="feature">
+                <h3>Why Choose Our Programs?</h3>
+                <ul>
+                    <li>Expert-led workshops and courses</li>
+                    <li>State-of-the-art facilities</li>
+                    <li>Hands-on practical training</li>
+                    <li>Flexible learning options</li>
+                </ul>
+                <a href="{% url 'education_training:course_list' %}" class="btn-register">Explore All Programs</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Updated News Section -->
+    <div class="news-section">
+        <h2>Latest Hospital News</h2>
+        <div class="news-cards">
+            {% for news in news_items %}
+            <div class="news-card">
+                {% if news.image %}
+                <img src="{{ news.image.url }}" alt="{{ news.title }}" class="news-card-image">
+                {% else %}
+                <img src="{% static 'images/default-news.jpg' %}" alt="Default News Image" class="news-card-image">
+                {% endif %}
+                <div class="news-card-content">
+                    <h3><a href="{% url 'news_detail' news.id %}">{{ news.title }}</a></h3>
+                    <p>{{ news.content|truncatewords:20 }}</p>
+                    <p class="news-card-date">Published on: {{ news.publication_date|date:"F d, Y" }}</p>
+                </div>
+            </div>
+            {% empty %}
+            <p>No news available at the moment.</p>
+            {% endfor %}
+        </div>
+        <a href="{% url 'hospital_news' %}" class="view-all-news">View All News</a>
+    </div>
+    <!-- Contact Us Section -->
+    <section class="contact-us-section">
+        <div class="container">
+            <h2>Get in Touch</h2>
+            <p>Have questions or need assistance? We're here to help!</p>
+            <a href="{% url 'home:contact_us' %}" class="btn btn-primary">Contact Us</a>
+        </div>
+    </section>
+{% endblock %}

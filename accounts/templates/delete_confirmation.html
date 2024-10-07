@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<center>
+    <div class="delete-confirmation" style="margin-top: 50px;">
+        <h2 style="color: red;">Are you sure you want to delete your profile?</h2>
+        <p style="color: white;">This action cannot be undone.</p>
+        <form method="POST" action="{% url 'accounts:delete_profile' %}">
+            {% csrf_token %}
+            <input type="submit" style="width:200px;margin:10px;font-size:18px;padding:10px;background-color: red;color: white;border: none;border-radius: 25px;font-weight: bold;" value="Confirm Delete">
+        </form>
+        <a href="{% url 'accounts:profile' %}"><input type="button" style="width:200px;margin:10px;font-size:18px;padding:10px;background-color: green;color: white;border: none;border-radius: 25px;font-weight: bold;" value="Cancel"></a>
+    </div>
+</center>
+{% endblock %}
+
+
+

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registration Page</title>
+    <style>
+        body {
+            background-color: black;
+        }
+        form {
+            margin-top: 40px;
+            width: 35%;
+            font-weight: bold;
+            padding: 10px;
+            border: 2px solid white;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        ::-webkit-scrollbar {
+            display: none;
+        }
+        input, select {
+            border: 2px solid black;
+            width: 250px;
+            margin: 10px;
+            text-align: center;
+            font-size: 15px;
+            height: 35px;
+            border-radius: 4px;
+        }
+        input:hover, select:hover {
+            cursor: pointer;
+        }
+        p {
+            width: 250px;
+            padding: 10px;
+            border-radius: 4px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <center>
+        <form method="POST">
+            {% csrf_token %}
+            <h1 style="color: white; font-family: Arial;">Sign Up</h1>
+            {% for message in messages %}
+                <p style="color: white; background-color: red;">{{ message }}</p>
+            {% endfor %}
+            <select name='type'>
+                <option value="Patient">Patient</option>
+                <option value="Doctor">Doctor</option>
+                <option value="Nurse">Nurse</option>
+                <option value="ICT">ICT</option>
+                <option value="Technician">Technician</option>
+                <option value="Contract worker">Contract worker</option>
+                <option value="Student">Student</option>
+            </select><br>
+            <input type="text" placeholder="Full Name" name="fname" required>
+            <input type="email" placeholder="Email" name="email" required>
+            <input type="text" placeholder="Phone Number" name="phone" required>
+            <input type="password" placeholder="Password" name="password1" required>
+            <input type="password" placeholder="Repeat Password" name="password2" required><br><br>
+            <a href="{% url 'accounts:login' %}" style="color: white;">Already have an account? Sign-in now!</a><br>
+            <input type="submit" style="background-color: green; color: white; border: none; border-radius: 25px; font-weight: bold;" value="Register">
+        </form>
+    </center>
+</body>
+</html>

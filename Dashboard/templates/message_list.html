@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Message List{% endblock %}
+
+{% block content %}
+<h1>Message List</h1>
+<table class="dark">
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone Number</th>
+        <th>Address</th>
+        <th>Message</th>
+    </tr>
+    {% for message in messages %}
+    <tr>
+        <td>{{ message.Name }}</td>
+        <td>{{ message.Email }}</td>
+        <td>{{ message.Phone_number }}</td>
+        <td>{{ message.Address }}</td>
+        <td>{{ message.Message|truncatewords:20 }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,166 @@
+{% extends 'admin/base_site.html' %}
+{% load static %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'admin/css/changelists.css' %}">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --background-color: #ecf0f1;
+            --text-color: #34495e;
+            --light-text: #ffffff;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            font-family: Arial, sans-serif;
+        }
+
+        #content-main {
+            padding: 20px;
+        }
+
+        .update-form {
+            width: 60%;
+            margin: 20px auto;
+            padding: 20px;
+            text-align: center;
+            background-color: var(--primary-color);
+            border-radius: 8px;
+            color: var(--light-text);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .update-form h1 {
+            color: var(--light-text);
+            margin-bottom: 20px;
+        }
+
+        .update-form label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .update-form select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #bdc3c7;
+            margin-bottom: 20px;
+        }
+
+        .update-form button {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            background-color: var(--secondary-color);
+            color: var(--light-text);
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .update-form button:hover {
+            background-color: #34495e;
+        }
+
+        .section-header {
+            background-color: var(--secondary-color);
+            color: var(--light-text);
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: var(--secondary-color);
+            color: var(--light-text);
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .update-btn {
+            padding: 8px 12px;
+            background-color: var(--accent-color);
+            color: var(--light-text);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .update-btn:hover {
+            background-color: #c0392b;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+    <div class="update-form">
+        <h1>Update Doctor Profile</h1>
+        
+        <form method="POST" action="{% url 'updatedoc' %}">
+            {% csrf_token %}
+            <div>
+                <label for="pid">Select Doctor:</label>
+                <select name="pid" id="pid" required>
+                    <option value="" disabled selected>Select a doctor</option>
+                    {% for doctor in doctors %}
+                        <option value="{{ doctor.did }}">{{ doctor.user.first_name }} {{ doctor.user.last_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <button type="submit">Update</button>
+        </form>
+    </div>
+
+    <div>
+        <h2 class="section-header">Doctor List</h2>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            {% for doctor in doctors %}
+            <tr>
+                <td>{{ doctor.user.first_name }} {{ doctor.user.last_name }}</td>
+                <td>{{ doctor.Department }}</td>
+                <td>{{ doctor.status }}</td>
+                <td>
+                    <form method="POST" action="{% url 'updatedoc' %}">
+                        {% csrf_token %}
+                        <input type='hidden' value="{{ doctor.did }}" name='pid'>
+                        <button type='submit' class="update-btn">Update</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}

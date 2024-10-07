@@ -1,0 +1,200 @@
+{% extends 'admin/base_site.html' %}
+{% load static %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'admin/css/changelists.css' %}">
+    <style>
+        :root {
+            --primary-color: #34495e;
+            --secondary-color: #2c3e50;
+            --accent-color: #f39c12;
+            --background-color: #ecf0f1;
+            --text-color: #333;
+            --light-text-color: #fff;
+            --table-header-color: #7f8c8d;
+            --table-row-even: #f4f6f7;
+            --table-row-odd: #fff;
+            --button-color: #95a5a6;
+            --button-hover-color: #7f8c8d;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            font-family: Arial, sans-serif;
+        }
+
+        #content-main {
+            padding: 20px;
+        }
+
+        .dashboard-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+        }
+
+        .stat-box {
+            width: 28%;
+            padding: 20px;
+            text-align: center;
+            background-color: var(--secondary-color);
+            border-radius: 8px;
+            color: var(--light-text-color);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-box h1 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .stat-box h2 {
+            font-size: 36px;
+            margin: 0;
+        }
+
+        .action-button {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            background-color: var(--button-color);
+            color: var(--light-text-color);
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .action-button:hover {
+            background-color: var(--button-hover-color);
+        }
+
+        table {
+            width: 100%;
+            text-align: center;
+            margin-top: 20px;
+            border-collapse: collapse;
+            background-color: var(--light-text-color);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        th {
+            background-color: var(--table-header-color);
+            color: var(--light-text-color);
+            padding: 12px;
+        }
+
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:nth-child(even) {
+            background-color: var(--table-row-even);
+        }
+
+        tr:nth-child(odd) {
+            background-color: var(--table-row-odd);
+        }
+
+        .delete-btn, .update-btn {
+            display: inline-block;
+            padding: 8px 12px;
+            border-radius: 4px;
+            text-decoration: none;
+            color: var(--light-text-color);
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .delete-btn {
+            background-color: var(--accent-color);
+        }
+
+        .delete-btn:hover {
+            background-color: #e67e22;
+        }
+
+        .update-btn {
+            background-color: var(--primary-color);
+        }
+
+        .update-btn:hover {
+            background-color: #2c3e50;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+    <div class="dashboard-stats">
+        <div class="stat-box">
+            <h1>Total Appointments</h1>
+            <h2>{{ tot }}</h2>
+        </div>
+        <div class="stat-box">
+            <h1>Appointments Done</h1>
+            <h2>{{ com }}</h2>
+        </div>
+        <div class="stat-box">
+            <h1>Upcoming Appointments</h1>
+            <h2>{{ pend }}</h2>
+        </div>
+    </div>
+
+    <div class="appt">
+        <a href="{% url 'admin:appointments_appointment_add' %}"><button class="action-button">NEW APPOINTMENT</button></a>
+        <table>
+            <tr>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Patient</th>
+                <th>Consulting Doctor</th>
+                <th>Status</th>
+            </tr>
+            {% for ap in ap %}
+            <tr>
+                <td>{{ ap.date }}</td>
+                <td>{{ ap.time }}</td>
+                <td>{{ ap.patient }}</td>
+                <td>{{ ap.doctor }}</td>
+                <td>{{ ap.status }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class="pat" style="margin-top: 30px;">
+        <a href="{% url 'admin:accounts_patient_add' %}"><button class="action-button">Create Patient</button></a>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Gender</th>
+                <th>Age</th>
+                <th>Remove</th>
+                <th>Update</th>
+            </tr>
+            {% for p in p %}
+            <tr>
+                <td>{{ p.user.first_name }}</td>
+                <td>{{ p.phone }}</td>
+                <td>{{ p.user.email }}</td>
+                <td>{{ p.gender }}</td>
+                <td>{{ p.age }}</td>
+                <td>
+                    <a href="{% url 'admin:accounts_patient_delete' p.pk %}" class="delete-btn">Delete</a>
+                </td>
+                <td>
+                    <a href="{% url 'admin:accounts_patient_change' p.pk %}" class="update-btn">Update</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}

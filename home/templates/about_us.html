@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About Us - Ralpha Hospital and Maternity{% endblock %}
+
+{% block extra_css %}
+<style>
+    .about-us {
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 0 20px;
+    }
+
+    .about-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .about-header h1 {
+        color: #003366;
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+    }
+
+    .about-header p {
+        color: #666;
+        font-size: 1.2rem;
+    }
+
+    .about-content {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .about-section {
+        width: 48%;
+        margin-bottom: 40px;
+    }
+
+    .about-section h2 {
+        color: #003366;
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+    }
+
+    .about-section p {
+        color: #333;
+        line-height: 1.6;
+    }
+
+    .about-image {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+
+    .mission-vision {
+        background-color: #f8f9fa;
+        padding: 40px;
+        border-radius: 10px;
+        text-align: center;
+    }
+
+    .mission-vision h2 {
+        color: #003366;
+        font-size: 2rem;
+        margin-bottom: 20px;
+    }
+
+    .mission-vision p {
+        color: #333;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin-bottom: 20px;
+    }
+
+    @media (max-width: 768px) {
+        .about-section {
+            width: 100%;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="about-us">
+    <div class="about-header">
+        <h1>About Ralpha Hospital and Maternity</h1>
+        <p>Providing World-Class Care for Over a Decade</p>
+    </div>
+
+    <div class="about-content">
+        <div class="about-section">
+            <img src="{% static 'images/hospital-exterior.jpg' %}" alt="Ralpha Hospital Exterior" class="about-image">
+            <h2>Our History</h2>
+            <p>Founded in 2010, Ralpha Hospital and Maternity has been at the forefront of medical care in Eastern Nigeria. From our humble beginnings as a small clinic, we have grown into a comprehensive medical center, serving thousands of patients annually.</p>
+        </div>
+
+        <div class="about-section">
+            <h2>Our Commitment</h2>
+            <p>At Ralpha Hospital, we are committed to providing the highest quality healthcare to our community. Our team of experienced doctors, nurses, and staff work tirelessly to ensure that every patient receives personalized, compassionate care.</p>
+            <p>We continuously invest in the latest medical technologies and training to offer our patients the best possible treatments and outcomes.</p>
+        </div>
+
+        <div class="about-section">
+            <h2>Our Facilities</h2>
+            <p>Our state-of-the-art facilities include advanced diagnostic equipment, modern operating theaters, comfortable patient rooms, and a dedicated maternity ward. We also house the Tom and Chi Hospital and the Ralpha medical school, fostering the next generation of healthcare professionals.</p>
+        </div>
+
+        <div class="about-section">
+            <img src="{% static 'images/medical-team.jpg' %}" alt="Ralpha Medical Team" class="about-image">
+            <h2>Our Team</h2>
+            <p>Our diverse team of medical professionals includes specialists in various fields, ensuring comprehensive care for all our patients. From general practitioners to specialized surgeons, our staff is dedicated to your health and well-being.</p>
+        </div>
+    </div>
+
+    <div class="mission-vision">
+        <h2>Our Mission and Vision</h2>
+        <p><strong>Mission:</strong> To provide exceptional healthcare services that improve the health and well-being of our community, delivered with compassion, integrity, and respect.</p>
+        <p><strong>Vision:</strong> To be the leading healthcare provider in Eastern Nigeria, known for excellence in patient care, medical education, and innovative treatments.</p>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Available Courses</h1>
+<div class="course-list">
+    {% for course in page_obj %}
+        <div class="course-item">
+            <h2><a href="{% url 'education_training:course_detail' course.id %}">{{ course.title }}</a></h2>
+            <p>{{ course.description|truncatewords:30 }}</p>
+            <p>Type: {{ course.get_course_type_display }}</p>
+            <p>Dates: {{ course.start_date }} - {{ course.end_date }}</p>
+        </div>
+    {% empty %}
+        <p>No courses available at the moment.</p>
+    {% endfor %}
+</div>
+
+{% include 'pagination.html' with page=page_obj %}
+{% endblock %}

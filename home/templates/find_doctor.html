@@ -1,0 +1,29 @@
+<!-- Find Doctor Section -->
+<div class="find-doctor">
+    <h2>Find a Doctor</h2>
+    <p>Search for a Ralpha Hospital expert by last name, specialty or department.</p>
+
+    <form method="GET" action="{% url 'home:find_doctor' %}">
+        <input type="text" name="query" placeholder="Enter doctor's name or department" value="{{ search_term }}" required>
+        <button type="submit">Search</button>
+    </form>
+    
+
+{% if doctors %}
+        <h3>Search Results:</h3>
+        <ul>
+            {% for doctor in doctors %}
+    <li>
+        <strong>Name:</strong> {{ doctor.first_name }} {{ doctor.last_name }}<br>
+        <strong>Phone:</strong> {{ doctor.phone }}<br>
+        <strong>Department:</strong> {{ doctor.specialty }}<br>
+        <strong>Email:</strong> {{ doctor.email }}<br>
+        <strong>Description:</strong> {{ doctor.description }}
+    </li>
+{% endfor %}
+
+        </ul>
+    {% else %}
+        <p>No doctors found. Please try a different search query.</p>
+    {% endif %}
+</div>

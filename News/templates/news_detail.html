@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ news.title }} - Ralpha Hospital and Maternity{% endblock %}
+
+{% block content %}
+<div class="news-detail">
+    <h1>{{ news.title }}</h1>
+    <p class="news-date">Published on: {{ news.publication_date|date:"F d, Y" }}</p>
+    
+    {% if news.image %}
+    <img src="{{ news.image.url }}" alt="{{ news.title }}" class="news-image">
+    {% endif %}
+    
+    <div class="news-content">
+        {{ news.content|linebreaks }}
+    </div>
+    
+    {% if news.video %}
+    <video width="100%" controls>
+        <source src="{{ news.video.url }}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    {% endif %}
+    
+    <a href="{% url 'hospital_news' %}" class="back-link">Back to News List</a>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .news-detail {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    
+    .news-detail h1 {
+        color: #003366;
+        margin-bottom: 10px;
+    }
+    
+    .news-date {
+        color: #666;
+        font-style: italic;
+        margin-bottom: 20px;
+    }
+    
+    .news-image {
+        max-width: 100%;
+        height: auto;
+        margin-bottom: 20px;
+    }
+    
+    .news-content {
+        line-height: 1.6;
+        color: #333;
+    }
+    
+    .back-link {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 15px;
+        background-color: #003366;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+    
+    .back-link:hover {
+        background-color: #004c99;
+    }
+</style>
+{% endblock %}

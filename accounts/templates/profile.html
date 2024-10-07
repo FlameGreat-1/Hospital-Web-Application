@@ -1,0 +1,213 @@
+{% extends 'base.html' %}
+
+{% block extra_css %}
+<style>
+    :root {
+        --primary-color: #3498db;
+        --secondary-color: #2c3e50;
+        --accent-color: #e74c3c;
+        --background-color: #ecf0f1;
+        --text-color: #333;
+        --light-text-color: #fff;
+    }
+
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: var(--background-color);
+        color: var(--text-color);
+        line-height: 1.6;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .profile {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        margin-bottom: 30px;
+    }
+
+    .profile-header {
+        background-color: var(--primary-color);
+        color: var(--light-text-color);
+        padding: 20px;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .profile-content {
+        padding: 20px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: var(--secondary-color);
+        color: var(--light-text-color);
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        margin: 10px 5px;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+        cursor: pointer;
+    }
+
+    .btn-primary {
+        background-color: var(--primary-color);
+        color: var(--light-text-color);
+    }
+
+    .btn-primary:hover {
+        background-color: #2980b9;
+    }
+
+    .btn-danger {
+        background-color: var(--accent-color);
+        color: var(--light-text-color);
+    }
+
+    .btn-danger:hover {
+        background-color: #c0392b;
+    }
+
+    .section {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+        overflow: hidden;
+    }
+
+    .section-header {
+        background-color: var(--secondary-color);
+        color: var(--light-text-color);
+        padding: 15px 20px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .section-content {
+        padding: 20px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    {% if pro %}
+        <div class="profile">
+            <div class="profile-header">
+                {{ user.first_name }}'s Profile
+            </div>
+            <div class="profile-content">
+                <table>
+                    <tr><th>Name:</th><td>{{ user.first_name }} {{ user.last_name }}</td></tr>
+                    <tr><th>Email:</th><td>{{ user.email }}</td></tr>
+                    {% if pro.phone %}<tr><th>Phone:</th><td>{{ pro.phone }}</td></tr>{% endif %}
+                    {% if pro.gender %}<tr><th>Gender:</th><td>{{ pro.gender }}</td></tr>{% endif %}
+                    {% if pro.age %}<tr><th>Age:</th><td>{{ pro.age }}</td></tr>{% endif %}
+
+                    {% if user.last_name == "Patient" %}
+                        {% if pro.address %}<tr><th>Address:</th><td>{{ pro.address }}</td></tr>{% endif %}
+                        {% if pro.bloodgroup %}<tr><th>Blood Group:</th><td>{{ pro.bloodgroup }}</td></tr>{% endif %}
+                        {% if pro.casepaper %}<tr><th>Case Paper:</th><td>{{ pro.casepaper }}</td></tr>{% endif %}
+                    {% endif %}
+
+                    {% if user.last_name == "Doctor" %}
+                        {% if pro.Department %}<tr><th>Department:</th><td>{{ pro.Department }}</td></tr>{% endif %}
+                        {% if pro.attendance %}<tr><th>Attendance:</th><td>{{ pro.attendance }}</td></tr>{% endif %}
+                        {% if pro.salary %}<tr><th>Salary:</th><td>{{ pro.salary }}</td></tr>{% endif %}
+                    {% endif %}
+                </table>
+
+                {% if user.last_name == "Patient" and pro.image %}
+                    <a href="{{ pro.image.url }}" class="btn btn-primary">Medical Report</a>
+                {% endif %}
+                
+                <a href="{% url 'accounts:update_profile' %}" class="btn btn-primary">Update Profile</a>
+                <a href="{% url 'accounts:delete_confirmation' %}" class="btn btn-danger">Delete Profile</a>
+            </div>
+        </div>
+
+        {% if user.last_name == "Patient" %}
+            {% if prescriptions %}
+                <div class="section">
+                    <div class="section-header">Your Prescriptions</div>
+                    <div class="section-content">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Disease</th>
+                                    <th>Prescription</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for prescription in prescriptions %}
+                                    <tr>
+                                        <td>{{ prescription.date|date:"F d, Y" }}</td>
+                                        <td>{{ prescription.disease }}</td>
+                                        <td>{{ prescription.prescription }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if invoices %}
+                <div class="section">
+                    <div class="section-header">Your Invoices</div>
+                    <div class="section-content">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Total</th>
+                                    <th>Paid</th>
+                                    <th>Outstanding</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for invoice in invoices %}
+                                    <tr>
+                                        <td>{{ invoice.date|date:"F d, Y" }}</td>
+                                        <td>{{ invoice.total }}</td>
+                                        <td>{{ invoice.paid }}</td>
+                                        <td>{{ invoice.outstanding }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            {% endif %}
+        {% endif %}
+    {% else %}
+        <p>{{ message }}</p>
+    {% endif %}
+</div>
+{% endblock %}

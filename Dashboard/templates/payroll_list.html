@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Payroll List{% endblock %}
+
+{% block content %}
+<h1>Payroll List</h1>
+<table class="dark">
+    <tr>
+        <th>Name</th>
+        <th>Department</th>
+        <th>Position</th>
+        <th>Salary</th>
+    </tr>
+    {% for payroll in payrolls %}
+    <tr>
+        <td>{{ payroll.Name.First_name }} {{ payroll.Name.Last_name }}</td>
+        <td>{{ payroll.Department.Name }}</td>
+        <td>{{ payroll.Position }}</td>
+        <td>${{ payroll.Salary }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

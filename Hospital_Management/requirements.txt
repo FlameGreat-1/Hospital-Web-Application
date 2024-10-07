@@ -1,0 +1,7 @@
+Django==3.2.9
+
+django-ical==1.8.3
+celery==5.2.7
+django-celery-beat==2.4.0
+reportlab==3.6.12
+icalendar==5.0.4 

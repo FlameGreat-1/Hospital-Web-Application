@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Insurance Information - Ralpha Hospital{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'billing_styles.css' %}">
+<style>
+    .insurance-form {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .insurance-form h1 {
+        color: #003366;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .insurance-form label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+    .insurance-form input[type="text"],
+    .insurance-form input[type="date"],
+    .insurance-form textarea {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+    .insurance-form button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background-color: #003366;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    .insurance-form button:hover {
+        background-color: #004c99;
+    }
+    .messages {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 20px;
+    }
+    .messages li {
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 4px;
+    }
+    .messages .success {
+        background-color: #d4edda;
+        color: #155724;
+    }
+    .messages .error {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="insurance-form">
+    <h1>Insurance Information</h1>
+    
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    
+    <form method="post">
+        {% csrf_token %}
+        <div>
+            <label for="{{ form.provider.id_for_label }}">Insurance Provider:</label>
+            {{ form.provider }}
+        </div>
+        <div>
+            <label for="{{ form.policy_number.id_for_label }}">Policy Number:</label>
+            {{ form.policy_number }}
+        </div>
+        <div>
+            <label for="{{ form.coverage_details.id_for_label }}">Coverage Details:</label>
+            {{ form.coverage_details }}
+        </div>
+        <div>
+            <label for="{{ form.expiration_date.id_for_label }}">Expiration Date:</label>
+            {{ form.expiration_date }}
+        </div>
+        <div>
+            <label for="{{ form.co_pay.id_for_label }}">Co-pay Amount:</label>
+            {{ form.co_pay }}
+        </div>
+        <div>
+            <label for="{{ form.deductible.id_for_label }}">Deductible Amount:</label>
+            {{ form.deductible }}
+        </div>
+        <button type="submit">Update Insurance Information</button>
+    </form>
+</div>
+{% endblock %}

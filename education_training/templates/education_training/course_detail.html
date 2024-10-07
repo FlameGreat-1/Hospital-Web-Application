@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ course.title }}</h1>
+<p>{{ course.description }}</p>
+<p>Type: {{ course.get_course_type_display }}</p>
+<p>Dates: {{ course.start_date }} - {{ course.end_date }}</p>
+<p>Capacity: {{ course.capacity }}</p>
+<p>Instructor: {{ course.instructor.get_full_name }}</p>
+
+{% if user.is_authenticated %}
+    {% if is_enrolled %}
+        <p>You are enrolled in this course.</p>
+    {% else %}
+        <form action="{% url 'education_training:enroll_course' course.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Enroll</button>
+        </form>
+    {% endif %}
+{% else %}
+    <p>Please <a href="{% url 'accounts:login' %}">log in</a> to enroll in this course.</p>
+{% endif %}
+
+
+
+{% if is_enrolled %}
+    <h3>Mark Attendance</h3>
+    <form action="{% url 'education_training:mark_attendance' course.id %}" method="post">
+        {% csrf_token %}
+        <input type="date" name="date" required>
+        <label>
+            <input type="checkbox" name="is_present"> Present
+        </label>
+        <button type="submit">Mark Attendance</button>
+    </form>
+{% endif %}
+
+
+{% endblock %}

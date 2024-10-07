@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<center>
+    {% load mathfilters %}
+    <div class="profile" style="font-family: Arial, sans-serif;">
+        {% if inv %}
+            <div style="background-color: indigo; color: white; padding: 5px; text-align: left; font-size: 15px;">
+                <h1 style="display: inline;">INVOICE</h1>
+                <div style="float: right; display: inline; font-size: 15px;">
+                    Date: {{ inv.date|date:"F d Y" }}
+                </div><br>
+                <div style="margin: 5px;">
+                    Name of Patient: {{ inv.patient }}<br><br>
+                    Phone: {{ inv.patient.phone }}<br><br>
+                    Address: {{ inv.patient.address }}
+                </div>
+            </div>
+            
+            <div style="background-color: white; padding: 5px; text-align: left; font-size: 15px; text-align: justify;">
+                <table>
+                    <tr>
+                        <th><h1>Total</h1></th>
+                        <th><h1>: ₦{{ inv.total }} </h1></th>
+                    </tr>
+                    <tr>
+                        <th><h1>Paid</h1></th>
+                        <th><h1>: ₦{{ inv.paid }} </h1></th>
+                    </tr>
+                    <tr>
+                        <th><h1>Fee</h1></th>
+                        <th><h1>: ₦{{ inv.paid|add:inv.outstanding|mul:0.05 }} </h1></th>
+                    </tr>
+                    <tr>
+                        <th><h1>Outstanding</h1></th>
+                        <th><h1>: ₦{{ inv.outstanding }} </h1></th>
+                    </tr>
+                </table>
+            </div>
+            
+            <div style="background-color: indigo; color: white; padding: 5px; text-align: left; font-size: 15px;">
+                <table>
+                    <tr>
+                        <th>Ralpha Hospital and maternity</th>
+                        <th>N0. 15 Ebebe Junction, Abakaliki</th>
+                    </tr>
+                    <tr>
+                        <th>RalphaHospital@gmail.com</th>
+                        <th>Abakaliki</th>
+                    </tr>
+                    <tr>
+                        <th>+2348136872013</th>
+                        <th></th>
+                    </tr>
+                </table>
+            </div>
+        {% else %}
+            <p>No invoice found.</p>
+        {% endif %}
+    </div>
+</center>
+{% endblock %}

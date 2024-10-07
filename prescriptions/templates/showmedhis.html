@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<center>
+    <div style="background-color: #f8f8f8; padding: 20px; border-radius: 8px; border: 2px solid #ccc; width: 80%; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+        <h1 style="color: #333; font-family: Arial;">Medical History</h1>
+        
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+            <thead>
+                <tr style="background-color: #2196F3; color: white;">
+                    <th style="border: 1px solid #ddd; padding: 8px;">Date</th>
+                    <th style="border: 1px solid #ddd; padding: 8px;">Disease</th>
+                    <th style="border: 1px solid #ddd; padding: 8px;">Prescription</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pre in pre %}
+                    <tr style="background-color: #e3f2fd;">
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{ pre.date|date:"F d, Y" }}</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{ pre.disease }}</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{ pre.prescription }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="3" style="text-align: center; border: 1px solid #ddd; padding: 8px;">No medical history found.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</center>
+{% endblock %}
