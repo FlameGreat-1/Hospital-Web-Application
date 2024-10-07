@@ -40,7 +40,7 @@ icalendar==5.0.4
 ## Installation
 
 1. Clone the repository:
-   git clone https://github.com/your-username/ralpha-hospital-web-app.git
+   git clone https://github.com/FlameGreat-1/Hospital-Web-Application.git
 
 
 2. Navigate to the project directory:
