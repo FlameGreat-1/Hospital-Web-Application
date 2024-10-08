@@ -107,7 +107,7 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Support
 
-For support and queries, please contact me support team at eugochukwu77@gmail.com or open an issue in the GitHub repository.
+For support and queries, please contact me at eugochukwu77@gmail.com or open an issue in the GitHub repository.
 
 ## Acknowledgments
 
