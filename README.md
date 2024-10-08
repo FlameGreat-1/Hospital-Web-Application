@@ -23,7 +23,7 @@ ____________**A lot of other features implemented too**____________
 
 - Frontend: HTML5, CSS3, JavaScript
 - Backend: Django
-- Database: MongoDB
+- Database: SQLite
 - Authentication: JWT (JSON Web Tokens)
 - Additional Libraries: Axios for API requests, Chart.js for data visualization
 
