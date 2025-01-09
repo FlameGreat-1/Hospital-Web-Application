@@ -1,3 +1,4 @@
+
 # Ralpha Hospital and Maternity Web Application
 
 ## Overview
@@ -113,5 +114,3 @@ For support and queries, please contact me at eugochukwu77@gmail.com or open an 
 
 - Ralpha Hospital and Maternity staff for their invaluable input and feedback
 - Django and the open source community for various libraries and tools used in this project
-
-   
